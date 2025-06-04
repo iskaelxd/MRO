@@ -1,0 +1,133 @@
+/* ===================================================
+  RESET y aseguramos que ocupe toda la pantalla
+  =================================================== */
+html, body, #root {
+ margin: 0;
+ padding: 0;
+ height: 100%;
+ width: 100%;
+ font-family: Arial, sans-serif;
+}
+/* ---------------------------------------------------
+  Contenedor login: dos columnas 50% - 50%
+  --------------------------------------------------- */
+
+.container-login {
+    display: flex; 
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ===================================================
+  LADO IZQUIERDO (IIoT)
+  =================================================== */
+
+.left-login {
+    flex: 1;
+    background-color: #1e1e2f; /* Color oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+/* Contenedor que agrupa “IIoT” y subtítulo */
+.logo-container {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+.logo-text {
+ color: #ffffff;
+ font-size: 4rem;
+ margin: 0;
+}
+.subtitle-text {
+ color: #ffffff;
+ font-size: 1.1rem;
+ margin: 0;
+ margin-top: 0.5rem;
+}
+/* ===================================================
+  LADO DERECHO (FORM + HEADER con logos)
+  =================================================== */
+
+.right-login {
+ flex: 1;
+ background-color: #f5f5f5; /* Color claro */
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
+
+/* ---------------------------------------------------
+  HEADER con logos y texto (sin fondo)
+  --------------------------------------------------- */
+.header-h2 {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 1.5rem;
+ width: 100%;
+ padding: 1rem 2rem;
+ box-sizing: border-box;
+}
+.header-h2 h2 {
+ margin: 0;
+ font-size: 1.75rem;
+ color: #8b1e1e;
+ text-align: center;
+}
+.logo-header {
+ max-height: 60px;
+ width: auto;
+}
+/* ---------------------------------------------------
+  FORMULARIO
+  --------------------------------------------------- */
+.login-form {
+ width: 100%;
+ max-width: 400px;
+ margin-top: 2rem;
+ display: flex;
+ flex-direction: column;
+}
+.form-group {
+ margin-bottom: 1.25rem;
+ display: flex;
+ flex-direction: column;
+}
+.form-group label {
+ margin-bottom: 0.5rem;
+ font-weight: bold;
+ color: #4a2c2c;
+}
+.form-group input {
+ padding: 0.5rem;
+ font-size: 1rem;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ outline: none;
+ text-align: center
+}
+.form-group input:focus {
+ border-color: #a03030;
+}
+button {
+ padding: 0.75rem;
+ font-size: 1rem;
+ background-color: #a03030;
+ color: #ffffff;
+ border: none;
+ border-radius: 4px;
+ cursor: pointer;
+ margin-top: 0.5rem;
+ transition: background-color 0.2s ease;
+}
+button:hover {
+ background-color: #802424;
+}
