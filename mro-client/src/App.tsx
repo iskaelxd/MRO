@@ -1,18 +1,20 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import Login from './components/Login.tsx'
-import Index from './components/index.tsx';
+import LoginPage from './Interfaz/Login.tsx'
+import IndexPage from './Interfaz/Index.tsx';
+
 
 function App() {  
 
   return (
  <Router>
    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/index" element={<Index />} />
+      <Route path="" element={<LoginPage />} />
+      <Route path="/Interfaz" element={<IndexPage />} />
     </Routes>
  </Router>
+
  );
 
 }
