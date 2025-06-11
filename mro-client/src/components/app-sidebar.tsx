@@ -11,6 +11,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  TableConfig,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -25,6 +26,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
+
 // This is sample data.
 const data = {
   user: {
@@ -34,9 +36,9 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      name: "MRO",
+      logo: TableConfig,
+      plan: "Modelo de Administración",
     },
     {
       name: "Acme Corp.",
@@ -113,6 +115,29 @@ const data = {
       ],
     },
     {
+      title: "Settings",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "General",
+          url: "#",
+        },
+        {
+          title: "Team",
+          url: "#",
+        },
+        {
+          title: "Billing",
+          url: "#",
+        },
+        {
+          title: "Limits",
+          url: "#",
+        },
+      ],
+    },
+     {
       title: "Settings",
       url: "#",
       icon: Settings2,

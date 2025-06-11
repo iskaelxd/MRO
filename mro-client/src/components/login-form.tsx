@@ -47,7 +47,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 </p>
 </aside>
 
-      {/* 50 % derecha */}
+  
 <section className="basis-1/2 flex flex-col items-center justify-center bg-muted px-6">
 <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
 <div className="grid gap-2">
