@@ -4,7 +4,7 @@ import './App.css'
 import LoginPage from './Interfaz/Login.tsx'
 import IndexPage from './Interfaz/Index.tsx';
 import DashboardLayout from "./Interfaz/DashboardLayout"
-
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {  
 
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
 
         {/* todas las rutas privadas comparten la barra */}
-        <Route element={<DashboardLayout />}>
+        <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route path="/interfaz" index element={<IndexPage />} />
           {/* aquí puedes seguir añadiendo <Route path="reports" element={<Reports />} /> */}
         </Route>
