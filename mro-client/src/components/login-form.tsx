@@ -1,6 +1,12 @@
 /* LoginForm.tsx */
+import { useMutation } from "@tanstack/react-query"
 
 import { useNavigate } from "react-router-dom"
+
+import { toast } from "sonner"
+
+import { loginEmpleado } from "@/api/user"
+
 
 import { cn } from "@/lib/utils"
 
@@ -10,17 +16,38 @@ import { Input } from "@/components/ui/input"
 
 import { Label } from "@/components/ui/label"
 
+
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
-
-    e.preventDefault()
-
+  
+const {
+  mutate,
+  isPending,
+} = useMutation({
+  mutationFn: loginEmpleado,
+  onSuccess: (data) => {
+    localStorage.setItem("empleado", JSON.stringify(data))
     navigate("/Interfaz")
+  },
+  onError: (error: any) => {
+    toast.error(error.message || "Error al iniciar sesión")
+  },
+})
 
-  }
+
+
+  
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   e.preventDefault()
+   const formData = new FormData(e.currentTarget)
+   const numeroEmpleado = formData.get("number") as string
+   const contrasena = formData.get("password") as string
+
+   mutate({ numeroEmpleado, contrasena })
+ }
+
 
   return (
 
@@ -82,10 +109,12 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
             />
 </div>
-<Button type="submit" className="w-full">
 
-            Iniciar Sesión
+<Button type="submit" className="w-full" disabled={isPending}>
+  {isPending ? "Iniciando..." : "Iniciar Sesión"}
 </Button>
+
+
 </form>
 </section>
 </div>

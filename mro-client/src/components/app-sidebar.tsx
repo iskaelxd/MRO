@@ -1,16 +1,13 @@
 import * as React from "react"
 
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
-  Command,
   Frame,
-  GalleryVerticalEnd,
+ UsersRound,
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
   TableConfig,
 } from "lucide-react"
 
@@ -30,32 +27,32 @@ import {
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Israel Sequeda Bustamante",
+    email: "jsequeis@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
     {
       name: "MRO",
       logo: TableConfig,
-      plan: "Modelo de Administración",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
+      plan: "Modulo de Administración",
+    }
+   // {
+     // name: "Acme Corp.",
+    //  logo: AudioWaveform,
+    //  plan: "Startup",
+   // },
+   // {
+   //   name: "Evil Corp.",
+   //   logo: Command,
+   //   plan: "Free",
+  //  },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Admnistracion de Usuarios",
       url: "#",
-      icon: SquareTerminal,
+      icon: UsersRound,
       isActive: true,
       items: [
         {
