@@ -1,5 +1,5 @@
 // src/context/AuthContext.tsx
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useState } from "react"
 
 export interface Empleado {
   id: number
@@ -28,13 +28,16 @@ const AuthContext = createContext<AuthState | undefined>(undefined)
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [empleado, setEmpleado] = useState<Empleado | null>(null)
-
-  // 1️⃣ al cargar la app consulta localStorage una sola vez
-  useEffect(() => {
+  const [empleado, setEmpleado] = useState<Empleado | null>(() => {
+    // 2️⃣ al iniciar, intenta cargar del localStorage
+    try {
     const raw = localStorage.getItem("empleado")
-    if (raw) setEmpleado(JSON.parse(raw))
-  }, [])
+    return raw ? JSON.parse(raw) : null
+    } catch (error) {
+      console.error("Error al cargar empleado desde localStorage:", error)
+      return null
+    }
+  })
 
   const logout = () => {
     localStorage.removeItem("empleado")

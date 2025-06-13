@@ -15,7 +15,7 @@ function App() {
   <Routes>
     <Route path="/" element={<LoginPage />} />
 
-    {/* TODO: todo lo que cuelgue de /interfaz está protegido */}
+
     <Route
       path="/Interfaz/*"
       element={
@@ -24,9 +24,8 @@ function App() {
         </ProtectedRoute>
       }
     >
-      {/*  index => /interfaz  */}
       <Route index element={<IndexPage />} />
-      {/* <Route path="reportes" element={<Reports />} /> etc. */}
+
     </Route>
   </Routes>
 </Router>
