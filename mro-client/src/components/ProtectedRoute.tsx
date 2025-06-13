@@ -1,15 +1,8 @@
-// src/components/ProtectedRoute.tsx
+// components/ProtectedRoute.tsx
 import { Navigate } from "react-router-dom"
-import { isAuthenticated } from "@/lib/auth"
+import { useAuth } from "@/context/AuthContext"
 
-interface ProtectedRouteProps {
-  children: React.ReactElement
-}
-
-export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  if (!isAuthenticated()) {
-    return <Navigate to="/" replace />
-  }
-
-  return children
+export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { empleado } = useAuth()
+  return empleado ? <>{children}</> : <Navigate to="/" replace />
 }

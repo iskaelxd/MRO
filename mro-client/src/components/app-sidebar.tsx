@@ -1,195 +1,94 @@
-import * as React from "react"
-
-import {
-  BookOpen,
-  Bot,
-  Frame,
- UsersRound,
-  Map,
-  PieChart,
-  Settings2,
-  TableConfig,
-} from "lucide-react"
-
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
+  SidebarHeader,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { NavMain } from "@/components/nav-main"
+import { NavUser } from "@/components/nav-user"
+import { TeamSwitcher } from "@/components/team-switcher"
+import { useAuth } from "@/context/AuthContext"
+import { useQuery } from "@tanstack/react-query"
+import { api } from "@/api/user"              /* ← usa la instancia global */
+import type { ModuleMenu, NavItem } from "@/lib/menu"
+import { resolveIcon } from "@/lib/resolve-icon"
+import { SkeletonSidebar } from "@/components/SkeletonSidebar"
+import { Table } from "lucide-react"         /* icono para el team */
 
+import React from "react"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "Israel Sequeda Bustamante",
-    email: "jsequeis@example.com",
+export function AppSidebar(
+  props: React.ComponentProps<typeof Sidebar>
+) {
+  const { empleado } = useAuth()
+
+  /* ------------ fetch del menú ------------ */
+  const { data: modules, isLoading } = useQuery<ModuleMenu[]>({
+    enabled: !!empleado,
+    queryKey: ["menu"],
+    queryFn: async () => {
+      const { data } = await api.get(
+        `/Empleado/ObtenerMenu/${empleado!.id}`
+      )
+      return data
+    },
+  })
+
+  if (!empleado || isLoading || !modules) return <SkeletonSidebar />
+
+  /* ------------ adaptadores de tipos ------------ */
+  const mapNav = (items: NavItem[]): Array<{
+    title: string
+    url: string
+    icon?: import("lucide-react").LucideIcon
+    items?: { title: string; url: string; icon?: import("lucide-react").LucideIcon; items?: any }[]
+  }> =>
+    items.map((i) => ({
+      title: i.title,
+      url: i.url,
+      icon: resolveIcon(i.icon) as import("lucide-react").LucideIcon | undefined,
+      items: i.children ? mapNav(i.children) : undefined,
+    }))
+
+  const adaptedModules = modules.map((m) => ({
+    ...m,
+    nav: mapNav(m.nav),
+  }))
+
+  const user = {
+    name: empleado.nombreEmpleado,
+    email: empleado.correo,
     avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
+  }
+
+  const teams = [
     {
       name: "MRO",
-      logo: TableConfig,
-      plan: "Modulo de Administración",
-    }
-   // {
-     // name: "Acme Corp.",
-    //  logo: AudioWaveform,
-    //  plan: "Startup",
-   // },
-   // {
-   //   name: "Evil Corp.",
-   //   logo: Command,
-   //   plan: "Free",
-  //  },
-  ],
-  navMain: [
-    {
-      title: "Admnistracion de Usuarios",
-      url: "#",
-      icon: UsersRound,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      logo: Table,                         // ← componente, no string
+      plan: empleado.moduloNombre,
     },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
+  ]
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  /* ------------ render ------------ */
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={teams} />
       </SidebarHeader>
+
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {adaptedModules.map((mod) => (
+          <React.Fragment key={mod.moduloId}>
+            <NavMain items={mod.nav} />
+          </React.Fragment>
+        ))}
       </SidebarContent>
+
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   )

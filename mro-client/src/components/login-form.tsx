@@ -1,4 +1,4 @@
-/* LoginForm.tsx */
+//src/components/* LoginForm.tsx */
 import { useMutation } from "@tanstack/react-query"
 
 import { useNavigate } from "react-router-dom"
@@ -16,20 +16,40 @@ import { Input } from "@/components/ui/input"
 
 import { Label } from "@/components/ui/label"
 
+import { useAuth } from "@/context/AuthContext"
+
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
   const navigate = useNavigate()
 
   
-const {
-  mutate,
-  isPending,
-} = useMutation({
+const { setEmpleado } = useAuth()
+
+
+const { mutate, isPending } = useMutation({
   mutationFn: loginEmpleado,
-  onSuccess: (data) => {
-    localStorage.setItem("empleado", JSON.stringify(data))
-    navigate("/Interfaz")
+  onSuccess: (raw) => {
+      // Adaptamos claves snake / PascalCase -> camelCase
+  const empleado = {
+    id:          raw.id ?? raw.Id,
+    numeroEmpleado: raw.numeroEmpleado ?? raw.NumeroEmpleado,
+    globalId:    raw.globalId ?? raw.GlobalId,
+    correo:      raw.correo ?? raw.Correo,
+    puesto:      raw.puesto ?? raw.Puesto,
+    nombreEmpleado: raw.nombreEmpleado ?? raw.NombreEmpleado,
+    rolId:       raw.rolId ?? raw.RolId,
+    moduloId:    raw.moduloId ?? raw.ModuloId,
+    moduloNombre:raw.moduloNombre ?? raw.ModuloNombre,
+    puedeVer:    raw.puedeVer ?? raw.PuedeVer,
+    puedeEditar: raw.puedeEditar ?? raw.PuedeEditar,
+    puedeCrear:  raw.puedeCrear ?? raw.PuedeCrear,
+    puedeEliminar:raw.puedeEliminar ?? raw.PuedeEliminar,
+  }
+
+  localStorage.setItem("empleado", JSON.stringify(empleado))
+  setEmpleado(empleado)
+  navigate("/interfaz")
   },
   onError: (error: any) => {
     toast.error(error.message || "Error al iniciar sesión")
