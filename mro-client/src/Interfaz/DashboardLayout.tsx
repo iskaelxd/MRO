@@ -1,3 +1,5 @@
+//src/Interfaz/DashboardLayout.tsx
+
 import { Outlet } from "react-router-dom"
 import {
   SidebarProvider,
@@ -14,8 +16,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { SectionCards } from "@/components/section-cards"
 
 export default function DashboardLayout() {
   return (
@@ -56,16 +56,7 @@ export default function DashboardLayout() {
         {/* ── CONTENIDO DE LA PÁGINA ─────────────────────────────── */}
         {/* <Outlet /> inserta la pantalla actual (Index, Reportes, etc.) */}
         <main className="flex-1 overflow-y-auto">
-         <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
-              <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
-              </div>
-            </div>
-          </div>
-        </div>
+           <Outlet />
         </main>
       </SidebarInset>
     </SidebarProvider>

@@ -14,9 +14,10 @@ import { api } from "@/api/user"              /* ← usa la instancia global */
 import type { ModuleMenu, NavItem } from "@/lib/menu"
 import { resolveIcon } from "@/lib/resolve-icon"
 import { SkeletonSidebar } from "@/components/SkeletonSidebar"
-import { Table } from "lucide-react"         /* icono para el team */
+import { Frame, PieChart, Table,Map, CalendarClock, FileBox, Bell } from "lucide-react"         /* icono para el team */
 
 import React from "react"
+import { NavProjects } from "./nav-projects"
 
 export function AppSidebar(
   props: React.ComponentProps<typeof Sidebar>
@@ -70,6 +71,24 @@ export function AppSidebar(
     },
   ]
 
+ const projects= [
+    {
+      name: "Calendario",
+      url: "#",
+      icon: CalendarClock,
+    },
+    {
+      name: "Mis Proyectos",
+      url: "#",
+      icon: FileBox,
+    },
+    {
+      name: "Notificaciones",
+      url: "#",
+      icon: Bell,
+    },
+  ]
+
   /* ------------ render ------------ */
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -81,6 +100,7 @@ export function AppSidebar(
         {adaptedModules.map((mod) => (
           <React.Fragment key={mod.moduloId}>
             <NavMain items={mod.nav} />
+            <NavProjects projects={projects} />
           </React.Fragment>
         ))}
       </SidebarContent>
