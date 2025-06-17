@@ -14,10 +14,11 @@ import { api } from "@/api/user"              /* ← usa la instancia global */
 import type { ModuleMenu, NavItem } from "@/lib/menu"
 import { resolveIcon } from "@/lib/resolve-icon"
 import { SkeletonSidebar } from "@/components/SkeletonSidebar"
-import { Frame, PieChart, Table,Map, CalendarClock, FileBox, Bell } from "lucide-react"         /* icono para el team */
+import { Table, CalendarClock, FileBox, Bell } from "lucide-react"         /* icono para el team */
 
 import React from "react"
 import { NavProjects } from "./nav-projects"
+
 
 export function AppSidebar(
   props: React.ComponentProps<typeof Sidebar>
@@ -68,6 +69,7 @@ export function AppSidebar(
       name: "MRO",
       logo: Table,                         // ← componente, no string
       plan: empleado.moduloNombre,
+      url: "/Interfaz",
     },
   ]
 
