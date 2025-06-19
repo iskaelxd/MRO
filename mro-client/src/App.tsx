@@ -10,7 +10,7 @@ import CrearUsuario from './Interfaz/admin/usuarios/CrearUsuario';
 import ListarUsuario from './Interfaz/admin/usuarios/ListarUsuario.tsx';
 import CrearMenu from './Interfaz/admin/menu/CrearMenu.tsx';
 import PermisosMenu from './Interfaz/admin/menu/PermisosMenu.tsx';
-import GestionModulo from './Interfaz/admin/modulo/GestionModulos.tsx';
+import { GestionModulo } from './Interfaz/admin/modulo/GestionModulos.tsx';
 
 
 function App() {  
